@@ -1,3 +1,5 @@
+// ? external import
+const bcrypt = require('bcryptjs');
 // ? internal import
 const User = require('../models/userSchema');
 
@@ -47,11 +49,17 @@ const getSingIn = async (req, res) => {
 
     // * email validation
     const signIn = await User.findOne({ email });
+    if (signIn) {
+      const isMatch = await bcrypt.compare(password, signIn.password);
 
-    if (!signIn) {
-      res.status(404).json({ error: 'Invalid Authentication!' });
+      // * password validation
+      if (!isMatch) {
+        res.status(404).json({ error: 'Invalid Authentication!' });
+      } else {
+        res.json({ message: 'User SignIn Successfully!' });
+      }
     } else {
-      res.json({ message: 'User SignIn Successfully!' });
+      res.status(404).json({ error: 'Invalid Authentication!' });
     }
   } catch (error) {
     console.log(error);
