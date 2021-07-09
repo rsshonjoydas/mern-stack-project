@@ -53,8 +53,16 @@ const getSingIn = async (req, res) => {
     const signIn = await User.findOne({ email });
     if (signIn) {
       const isMatch = await bcrypt.compare(password, signIn.password);
+
+      // * jwt token
       const token = await signIn.generateAuthToken();
       console.log(token);
+
+      // * cookie
+      res.cookie("jwtoken", token, {
+        expires: new Date(Date.now() + 2.592e+9),
+        httpOnly: true
+      })
 
       // * password validation
       if (!isMatch) {

@@ -32,6 +32,11 @@ app.get('/', (req, res) => {
   res.send("hello RS Shonjoy")
 })
 
+app.get('/contact', (req, res) => {
+  res.cookie("Test", "contact")
+  res.send("hello Contact cookie")
+})
+
 app.use("/", authRouter);
 
 
