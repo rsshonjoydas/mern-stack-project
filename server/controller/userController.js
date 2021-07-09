@@ -1,5 +1,7 @@
 // ? external import
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken')
+
 // ? internal import
 const User = require('../models/userSchema');
 
@@ -51,6 +53,8 @@ const getSingIn = async (req, res) => {
     const signIn = await User.findOne({ email });
     if (signIn) {
       const isMatch = await bcrypt.compare(password, signIn.password);
+      const token = await signIn.generateAuthToken();
+      console.log(token);
 
       // * password validation
       if (!isMatch) {
