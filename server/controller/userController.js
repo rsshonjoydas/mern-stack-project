@@ -1,20 +1,9 @@
 // ? internal import
 const User = require('../models/userSchema');
 
-// * get posts page
+// * user sign in and registration
 
-// TODO: display posts
-const getSingIn = async (req, res) => {
-  try {
-    const singIn = await User.find();
-
-    res.status(200).json(singIn);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
-// TODO: create post
+// TODO: sign up
 const createUser = async (req, res) => {
   const { name, email, phone, work, password, cPassword } = req.body;
 
@@ -41,6 +30,28 @@ const createUser = async (req, res) => {
     } else {
       res.status(500).json({ error: 'Failed to register!' });
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// TODO: sign in and validation
+const getSingIn = async (req, res) => {
+  // * empty field validation
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      return res.status(400).json({ error: 'Plz Filled the data' });
+    }
+
+    // * email validation
+      const signIn = await User.findOne({ email });
+
+      if (!signIn) {
+        res.status(404).json({ error: 'Invalid Authentication!' });
+      } else {
+        res.json({ message: 'User SignIn Successfully!' });
+      }
   } catch (error) {
     console.log(error);
   }
