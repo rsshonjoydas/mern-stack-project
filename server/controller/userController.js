@@ -15,20 +15,21 @@ const createUser = async (req, res) => {
     const userExit = await User.findOne({ email });
     if (userExit) {
       return res.status(422).json({ error: 'Email already exit!' });
-    }
-    const user = new User({
-      name,
-      email,
-      phone,
-      work,
-      password,
-      cPassword,
-    });
-    const userRegister = await user.save();
-    if (userRegister) {
-      res.status(201).json({ message: 'user registered successfully!' });
+    } else if (password !== cPassword) {
+      return res
+        .status(422)
+        .json({ error: 'Recover password are not matching!' });
     } else {
-      res.status(500).json({ error: 'Failed to register!' });
+      const user = new User({
+        name,
+        email,
+        phone,
+        work,
+        password,
+        cPassword,
+      });
+      await user.save();
+      res.status(201).json({ message: 'user registered successfully!' });
     }
   } catch (error) {
     console.log(error);
@@ -45,13 +46,13 @@ const getSingIn = async (req, res) => {
     }
 
     // * email validation
-      const signIn = await User.findOne({ email });
+    const signIn = await User.findOne({ email });
 
-      if (!signIn) {
-        res.status(404).json({ error: 'Invalid Authentication!' });
-      } else {
-        res.json({ message: 'User SignIn Successfully!' });
-      }
+    if (!signIn) {
+      res.status(404).json({ error: 'Invalid Authentication!' });
+    } else {
+      res.json({ message: 'User SignIn Successfully!' });
+    }
   } catch (error) {
     console.log(error);
   }
