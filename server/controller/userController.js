@@ -22,23 +22,28 @@ const createUser = async (req, res) => {
     return res.status(422).json({ error: 'plz, filled the field property' });
   }
 
-  User.findOne({ email })
-    .then((userExit) => {
-      if (userExit) {
-        return res.status(422).json({ error: 'Email already exit!' });
-      }
-      const user = new User({ name, email, phone, work, password, cPassword });
-
-      user
-        .save()
-        .then(() => {
-          res.status(201).json({ message: 'user registered successfully!' });
-        })
-        .catch((err) => res.status(500).json({ error: 'Failed to register!' }));
-    })
-    .catch((err) => {
-      console.log(err);
+  try {
+    const userExit = await User.findOne({ email });
+    if (userExit) {
+      return res.status(422).json({ error: 'Email already exit!' });
+    }
+    const user = new User({
+      name,
+      email,
+      phone,
+      work,
+      password,
+      cPassword,
     });
+    const userRegister = await user.save();
+    if (userRegister) {
+      res.status(201).json({ message: 'user registered successfully!' });
+    } else {
+      res.status(500).json({ error: 'Failed to register!' });
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 module.exports = {
