@@ -1,9 +1,10 @@
 import React from 'react';
+import Navbar from './components/Navbar';
 
 const App = () => (
-  <div>
-    <h1>RS Shonjoy</h1>
-  </div>
+  <>
+    <Navbar />
+  </>
 );
 
 export default App;
