@@ -1,38 +1,57 @@
-.App {
-  text-align: center;
+section {
+  padding: 100px 0;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.max-width {
+  max-width: 1300px;
+  padding: 0 80px;
+  margin: auto;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.about,
+.services,
+.skills,
+.teams,
+.contact,
+footer {
+  font-family: 'Poppins', sans-serif;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.about .about-content,
+.services .serv-content,
+.skills .skills-content,
+.contact .contact-content {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
 }
-
-.App-link {
-  color: #61dafb;
+section .title {
+  position: relative;
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 60px;
+  padding-bottom: 20px;
+  font-family: 'Ubuntu', sans-serif;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+section .title::before {
+  content: '';
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 180px;
+  height: 3px;
+  background: #111;
+  transform: translateX(-50%);
+}
+section .title::after {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  font-size: 20px;
+  color: crimson;
+  padding: 0 5px;
+  background: #fff;
+  transform: translateX(-50%);
+}
+a {
+  text-decoration: none;
 }
