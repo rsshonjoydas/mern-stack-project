@@ -66,12 +66,12 @@ const getSingIn = async (req, res) => {
 
       // * password validation
       if (!isMatch) {
-        res.status(404).json({ error: 'Invalid Authentication!' });
+        res.status(400).json({ error: 'Invalid Authentication!' });
       } else {
         res.json({ message: 'User SignIn Successfully!' });
       }
     } else {
-      res.status(404).json({ error: 'Invalid Authentication!' });
+      res.status(400).json({ error: 'Invalid Authentication!' });
     }
   } catch (error) {
     console.log(error);
